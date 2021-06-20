@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block content %}
+<form method="POST" action="/submit_pid">
+  <div class="mt-4 h-100 row justify-content-center">
+    <input name="pid" type="text" placeholder="Participant ID" class="form-control-lg"/>
+    <button id="submit_pid" type="submit" class="mx-3 btn btn-primary">Next</button>
+  </div>
+</form>
+{% endblock %}

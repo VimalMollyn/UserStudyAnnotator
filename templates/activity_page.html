@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="row justify-content-center m-3">
+  <h4>Current Context: <span class="badge bg-primary text-light mx-3 p-2 align-middle">{{ html_data["curr_context"] }}</span></h4>
+</div>
+<div class="row justify-content-center m-3">
+  <h4>Current Activity: <span class="badge bg-success text-light mx-3 p-2 align-middle">{{ html_data["curr_activity"] }}</span></h4>
+</div>
+<div class="row justify-content-center m-3">
+  <h4>Current Trial No: <span class="badge bg-secondary text-light mx-3 p-2 align-middle">{{ html_data["curr_trialno"] }}</span></h4>
+</div>
+
+<div class="row justify-content-center m-4">
+  <button type="button" class="btn btn-success m-2">Start</button>
+  <button type="button" class="btn btn-danger m-2">Stop</button>
+  <button type="button" class="btn btn-warning m-2">Redo</button>
+  <button type="button" class="btn btn-primary m-2">Next</button>
+</div>
+
+{% endblock %}
+
