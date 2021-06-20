@@ -1,21 +1,116 @@
 {% extends 'base.html' %}
 {% block content %}
-<div class="row justify-content-center m-3">
-  <h4>Current Context: <span class="badge bg-primary text-light mx-3 p-2 align-middle">{{ html_data["curr_context"] }}</span></h4>
-</div>
-<div class="row justify-content-center m-3">
-  <h4>Current Activity: <span class="badge bg-success text-light mx-3 p-2 align-middle">{{ html_data["curr_activity"] }}</span></h4>
-</div>
-<div class="row justify-content-center m-3">
-  <h4>Current Trial No: <span class="badge bg-secondary text-light mx-3 p-2 align-middle">{{ html_data["curr_trialno"] }}</span></h4>
-</div>
+  <div class="row justify-content-center m-3">
+    <h4>Current Participant: <i id="pid">{{ html_data["curr_pid"] }}</i></h4>
+  </div>
+  <div class="row justify-content-center m-3">
+    <h4>Current Context: <span id="context" class="badge bg-primary text-light mx-3 p-2 align-middle">{{ html_data["curr_context"] }}</span></h4>
+  </div>
+  <div class="row justify-content-center m-3">
+    <h4>Current Activity: <span id="activity" class="badge bg-success text-light mx-3 p-2 align-middle">{{ html_data["curr_activity"] }}</span></h4>
+  </div>
+  <div class="row justify-content-center m-3">
+    <h4>Current Trial No: <span id="trialno" class="badge bg-secondary text-light mx-3 p-2 align-middle">{{ html_data["curr_trialno"] }}</span></h4>
+  </div>
 
-<div class="row justify-content-center m-4">
-  <button type="button" class="btn btn-success m-2">Start</button>
-  <button type="button" class="btn btn-danger m-2">Stop</button>
-  <button type="button" class="btn btn-warning m-2">Redo</button>
-  <button type="button" class="btn btn-primary m-2">Next</button>
-</div>
+  <div class="row justify-content-center m-4">
+    <button id="start_button" type="button" class="btn btn-success m-2">Start</button>
+    <button id="stop_button" type="button" class="btn btn-danger m-2" disabled>Stop</button>
+    <button id="redo_button" type="button" class="btn btn-warning m-2" disabled>Redo</button>
+    <button id="next_button" type="button" class="btn btn-primary m-2" disabled>Next</button>
+  </div>
 
+  <script>
+    let start_button = document.getElementById("start_button");
+    let stop_button = document.getElementById("stop_button");
+    let redo_button = document.getElementById("redo_button");
+    let next_button = document.getElementById("next_button");
+
+    let start_time = 0;
+    let end_time = 0;
+
+    // add click event listeners to each button
+
+    // start button
+    start_button.addEventListener("click", (data) => {
+      console.log("clicked the start button");
+
+      // note down the time
+      start_time = Date.now();
+
+      // disable all buttons except stop
+      start_button.disabled = true;
+      redo_button.disabled = true;
+      next_button.disabled = true;
+      stop_button.disabled = false;
+    })
+
+    // stop button
+    stop_button.addEventListener("click", (data) => {
+      console.log("clicked the stop button");
+
+      // note down the time
+      end_time = Date.now();
+
+      // disable all buttons except redo, next
+      start_button.disabled = true;
+      redo_button.disabled = false;
+      next_button.disabled = false;
+      stop_button.disabled = true;
+    })
+
+    // Redo button
+    redo_button.addEventListener("click", (data) => {
+      console.log("clicked the redo button");
+
+      // note down the time
+      start_time = Date.now();
+
+      // disable all buttons except stop
+      start_button.disabled = true;
+      redo_button.disabled = true;
+      next_button.disabled = true;
+      stop_button.disabled = false;
+    })
+
+    // Next button
+    next_button.addEventListener("click", (data) => {
+      console.log("clicked the next button");
+
+      // send fetch request to flask server asking for the next trial details
+
+      // send POST request to the flask server
+      fetch(`${window.origin}/next_trial`, {
+          method: "POST",
+          body: JSON.stringify({
+            message: "Sending timestamps, expecting next trial details in return!",
+            start_time: start_time,
+            end_time: end_time,
+            pid: document.getElementById("pid").innerHTML,
+            context: document.getElementById("context").innerHTML,
+            activity: document.getElementById("activity").innerHTML,
+            trialno: document.getElementById("trialno").innerHTML
+          }),
+          headers: new Headers({
+            "content-type": "application/json"
+          })
+        })
+        .then((res) => {
+          res.json().then((msg) => {
+            console.log(msg)
+            document.getElementById("context").innerHTML = msg.curr_context;
+            document.getElementById("activity").innerHTML = msg.curr_activity;
+            document.getElementById("trialno").innerHTML = msg.curr_trialno;
+          })
+      });
+
+      // disable all buttons except start
+      start_button.disabled = false;
+      redo_button.disabled = true;
+      next_button.disabled = true;
+      stop_button.disabled = true;
+    })
+
+  </script>
 {% endblock %}
 
