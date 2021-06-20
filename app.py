@@ -7,7 +7,7 @@ from pathlib import Path
 app = Flask(__name__)
 
 # constants
-num_trials = 3
+num_trials = 2
 
 def get_contexts_activities_lists(pid):
     # set a random seed
@@ -42,7 +42,7 @@ def get_curr_status(pid):
     contexts, new_activity_dict = get_contexts_activities_lists(pid)
 
     # read participant's state
-    p = Path(f"study_data/{pid}/p_state.json")
+    p = Path(f"study_data/p_{pid}/p_state.json")
     if p.exists():
         # participant exists, read p_state
         with open(p, "r") as f:
@@ -76,8 +76,6 @@ def next_trial():
         end_time = req["end_time"]
         pid = req["pid"]
         
-        # TODO save timestamps with any notes
-
         # get contexts, activities list
         contexts, new_activity_dict = get_contexts_activities_lists(pid)
 
@@ -88,6 +86,11 @@ def next_trial():
         assert curr_context == req["context"]
         assert curr_activity == req["activity"]
         assert curr_trialno == int(req["trialno"])
+
+        # TODO save timestamps with any notes
+        row = map(lambda x: str(x), [pid, start_time, end_time, curr_context, curr_activity, curr_trialno])
+        with open(f"study_data/p_{pid}/timestamps.csv", "a") as f:
+            f.write(",".join(row) + "\n")
 
         # update the status
         
@@ -109,7 +112,7 @@ def next_trial():
             p_state["activity"] += 1
 
         # save the p_state
-        p = Path(f"study_data/{pid}/p_state.json")
+        p = Path(f"study_data/p_{pid}/p_state.json")
         with open(p, "w") as f:
             json.dump(p_state, f)
 
