@@ -7,7 +7,7 @@ from pathlib import Path
 app = Flask(__name__)
 
 # constants
-num_trials = 2
+num_trials = 3
 
 def get_contexts_activities_lists(pid):
     # set a random seed
@@ -73,6 +73,8 @@ def next_trial():
         req = request.get_json()
 
         start_time = req["start_time"]
+        start_main_time = req["start_main_time"]
+        end_main_time = req["end_main_time"]
         end_time = req["end_time"]
         pid = req["pid"]
         
@@ -88,7 +90,7 @@ def next_trial():
         assert curr_trialno == int(req["trialno"])
 
         # TODO save timestamps with any notes
-        row = map(lambda x: str(x), [pid, start_time, end_time, curr_context, curr_activity, curr_trialno])
+        row = map(lambda x: str(x), [pid, start_time, start_main_time, end_main_time, end_time, curr_context, curr_activity, curr_trialno])
         with open(f"study_data/p_{pid}/timestamps.csv", "a") as f:
             f.write(",".join(row) + "\n")
 

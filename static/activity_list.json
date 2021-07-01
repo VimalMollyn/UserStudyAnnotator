@@ -2,6 +2,6 @@
     "Bathroom": ["Brushing_hair","Hair_dryer_in_use","Shaver_in_use","Toilet_flushing","Toothbrushing","Washing_hands"],
     "Kitchen": ["Blender_in_use","Chopping","Grating","Microwave","Pouring_pitcher","Twisting_jar","Washing_Utensils","Wiping_with_rag"],
     "Misc": ["Alarm_clock","Clapping","Coughing","Door_in_use","Drinking","Knocking","Laughing","Scratching"],
-    "Workshop": ["Vacuum in use","Drill in use","Hammering","Saw in use","Screwing","Sanding"],
+    "Workshop": ["Vacuum in use","Drill in use","Hammering", "Screwing","Sanding"],
     "All": ["Speech"]
 }

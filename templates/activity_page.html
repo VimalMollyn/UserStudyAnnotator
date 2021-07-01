@@ -15,19 +15,31 @@
 
   <div class="row justify-content-center m-4">
     <button id="start_button" type="button" class="btn btn-success m-2">Start</button>
+    <button id="start_main" type="button" class="btn btn-success m-2" disabled>Start Main Activity</button>
+    <button id="stop_main" type="button" class="btn btn-danger m-2" disabled>Stop Main Activity</button>
     <button id="stop_button" type="button" class="btn btn-danger m-2" disabled>Stop</button>
     <button id="redo_button" type="button" class="btn btn-warning m-2" disabled>Redo</button>
     <button id="next_button" type="button" class="btn btn-primary m-2" disabled>Next</button>
   </div>
+  <div class="row justify-content-center m-4">
+    <h2 id="stopwatch">Elapsed: 0</h2>
+  </div>
 
   <script>
     let start_button = document.getElementById("start_button");
+    let start_main = document.getElementById("start_main");
+    let stop_main = document.getElementById("stop_main");
     let stop_button = document.getElementById("stop_button");
     let redo_button = document.getElementById("redo_button");
     let next_button = document.getElementById("next_button");
+    let stopwatch = document.getElementById("stopwatch");
 
     let start_time = 0;
+    let start_main_time = 0;
+    let end_main_time = 0;
     let end_time = 0;
+    let timer;
+    let seconds_elapsed = 0;
 
     // add click event listeners to each button
 
@@ -38,11 +50,65 @@
       // note down the time
       start_time = Date.now();
 
+      // disable all buttons except start_main
+      start_button.disabled = true;
+      start_main.disabled = false;
+      stop_main.disabled = true;
+      redo_button.disabled = true;
+      next_button.disabled = true;
+      stop_button.disabled = true;
+
+      // make seconds_elapsed 0
+      seconds_elapsed = 0;
+    })
+
+    // start main button
+    start_main.addEventListener("click", (data) => {
+      console.log("clicked the start main button");
+
+      // note down the time
+      start_main_time = Date.now();
+
+      // disable all buttons except stop main
+      start_button.disabled = true;
+      start_main.disabled = true;
+      stop_main.disabled = false;
+      redo_button.disabled = true;
+      next_button.disabled = true;
+      stop_button.disabled = true;
+
+      // start the timer
+      console.log("Started the timer!");
+      clearInterval(timer);
+      timer = setInterval(() => {
+        // increment counter
+        seconds_elapsed += 1;
+
+        // set the html
+        stopwatch.innerHTML = "Elapsed: " + seconds_elapsed;
+      }, 1000);
+      
+    })
+
+    // stop main button
+    stop_main.addEventListener("click", (data) => {
+      console.log("clicked the stop main button");
+
+      // note down the time
+      end_main_time = Date.now();
+
       // disable all buttons except stop
       start_button.disabled = true;
+      start_main.disabled = true;
+      stop_main.disabled = true;
       redo_button.disabled = true;
       next_button.disabled = true;
       stop_button.disabled = false;
+
+      // stop the timer
+      console.log("Stopped the timer!");
+      clearInterval(timer);
+      
     })
 
     // stop button
@@ -54,6 +120,8 @@
 
       // disable all buttons except redo, next
       start_button.disabled = true;
+      start_main.disabled = true;
+      stop_main.disabled = true;
       redo_button.disabled = false;
       next_button.disabled = false;
       stop_button.disabled = true;
@@ -66,11 +134,19 @@
       // note down the time
       start_time = Date.now();
 
-      // disable all buttons except stop
+      // disable all buttons except start_main
       start_button.disabled = true;
+      start_main.disabled = false;
+      stop_main.disabled = true;
       redo_button.disabled = true;
       next_button.disabled = true;
-      stop_button.disabled = false;
+      stop_button.disabled = true;
+
+      // make seconds_elapsed 0
+      seconds_elapsed = 0;
+
+      // change innerHTML
+      stopwatch.innerHTML = "Elapsed: " + seconds_elapsed;
     })
 
     // Next button
@@ -85,6 +161,8 @@
           body: JSON.stringify({
             message: "Sending timestamps, expecting next trial details in return!",
             start_time: start_time,
+            start_main_time: start_main_time,
+            end_main_time: end_main_time,
             end_time: end_time,
             pid: document.getElementById("pid").innerHTML,
             context: document.getElementById("context").innerHTML,
@@ -106,9 +184,17 @@
 
       // disable all buttons except start
       start_button.disabled = false;
+      start_main.disabled = true;
+      stop_main.disabled = true;
       redo_button.disabled = true;
       next_button.disabled = true;
       stop_button.disabled = true;
+
+      // make seconds_elapsed 0
+      seconds_elapsed = 0;
+
+      // change innerHTML
+      stopwatch.innerHTML = "Elapsed: " + seconds_elapsed;
     })
 
   </script>
