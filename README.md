@@ -2,7 +2,7 @@
 A minimal, hackable annotator for user studies. Originally created for [_SAMoSA_ (IMWUT/Ubicomp 2022)](https://vimal-mollyn.com/research/samosa-sensing-activities-with-motion-and-sub-sampled-audio/).
 ![Main page of the tool](media/Page2.png)
 <p>
-  <img src="media/Page2.png" width="100%"/>
+  <img src="media/Page1.png" width="100%"/>
 </p>
 
 ## What's it good for?
