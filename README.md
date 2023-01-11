@@ -14,7 +14,12 @@ The tool randomly presents an activity and context, given a set of [contexts wit
 - Timer - in order to make sure you collect enough data! :D
 
 ## How to use?
-Tested with python3.8  
+
+### Install dependencies
+Tested with `python3.8`
+```
+flask
+```
 
 ### 1. Run
 ```
@@ -31,7 +36,3 @@ Make sure it's a number - this is used as the random seed!
 ## I want a different set of labels
 Modify `static/activity_list.json`.
 
-## Dependencies
-```
-flask
-```
