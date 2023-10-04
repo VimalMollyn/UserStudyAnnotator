@@ -3,5 +3,11 @@
     "Kitchen": ["Blender_in_use","Chopping","Grating","Microwave","Pouring_pitcher","Twisting_jar","Washing_Utensils","Wiping_with_rag"],
     "Misc": ["Alarm_clock","Clapping","Coughing","Drinking","Knocking","Laughing","Scratching"],
     "Workshop": ["Vacuum in use","Drill in use","Hammering", "Screwing","Sanding"],
+    "Living_Room": ["Watching_TV", "Reading", "Chatting", "Napping", "Playing_Video_Games"],
+    "Bedroom": ["Sleeping", "Changing_Clothes", "Using_Laptop", "Reading_Book", "Listening_to_Music"],
+    "Outdoor": ["Running", "Walking", "Cycling", "Picnicking", "Playing_Sports"],
+    "Office": ["Typing", "Meetings", "Coffee_Break", "Paperwork", "Video_Conference"],
+    "Gym": ["Treadmill", "Weightlifting", "Stretching", "Aerobics", "Yoga"],
+    "Car": ["Driving", "Listening_to_Podcast", "Talking_on_Phone", "Eating_Snacks"],
     "All": ["Speech"]
 }
